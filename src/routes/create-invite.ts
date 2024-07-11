@@ -6,6 +6,7 @@ import { dayjs } from "../lib/dayjs";
 import nodemailer from "nodemailer";
 import { getMailClient } from "../lib/mail";
 import { ClientError } from "../errors/client-error";
+import { env } from "../env";
 
 export async function createInvite(app:FastifyInstance) {
    await app.withTypeProvider<ZodTypeProvider>().post('/trips/:tripId/invites', {
@@ -46,7 +47,7 @@ export async function createInvite(app:FastifyInstance) {
 
       let confirmationLink = ''
 
-      confirmationLink = `http://localhost:3333/participants/${participant.id}/confirm`
+      confirmationLink = `${env.API_BASE_URL}/participants/${participant.id}/confirm`
       const message = await mail.sendMail({
         from: {
           name: 'Equipe plann.er',
